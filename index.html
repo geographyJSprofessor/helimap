@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <title>2023 Vertical Flight Society Conferences</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: whitesmoke;
+            font-family: Lato, sans-serif;
+            color: #0D0000;
+        }
+        header {
+            padding: 6px 10%;
+        }
+        h1 {
+            display: inline-block;
+            margin-right: 20px;
+            color: #001323;
+        }
+        h2 {
+            display: inline-block;
+            color: #001323;
+        }
+        #map {
+            width: 80%;
+            height: 540px;
+            margin: 10px auto;
+        }
+        footer {
+            padding: 6px 10%;
+            width: 80%;
+        }
+        p {
+            font-size: 1em;
+            color: #001323;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>2023 Vertical Flight Society Conferences</h1>
+        <h2></h2>
+    </header>
+
+    <div id='map'></div>
+
+    <footer>
+        <p>By Fox FMC</p>
+        <p></p>
+    </footer>
+
+    <script src="VFS1.js"></script>
+    <script>
+
+      var map = L.map('map', {
+          center: [36,-94],
+          zoom: 4,
+      });
+      
+      var tiles = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+          subdomains: 'abcd',
+          maxZoom: 19
+      });  
+      
+      tiles.addTo(map);
+        
+    
+    
+    
+      L.geoJson(a, {
+          pointToLayer: function(feature,latlng) {
+            console.log(feature.properties.Website)
+              console.log(feature.properties)
+              return L.circleMarker(latlng, {
+                 color: 'blue',
+                 weight: 2,
+                 fillColor: 'blue',
+                 fillOpacity: .5,
+                 radius: 8 //step4
+              });   
+          },
+          
+     
+         
+    //step 5
+    onEachFeature : function(feature,layer) {
+    layer.on('mouseover', function() {
+    layer.setStyle({
+        fillColor: 'red'
+    });
+});
+layer.on('mouseout', function() {
+    layer.setStyle({
+        fillColor: 'blue'
+    });
+});
+
+
+          //step 6  
+          
+           var name = feature.properties.Name
+           var location = feature.properties.Location
+          var date = feature.properties.Date
+          var website = feature.properties.Website
+      
+                                                
+          
+          var popup = (
+          "<b>"+name+"</b><br>"+
+          "<i>"+date+"</i><br>"  +location+  "<br>" )
+          
+                       layer.bindTooltip(popup).openTooltip
+          }
+          
+          
+      }).addTo(map);
+
+     /*  "<a href='" + feature.properties.Website + "website'>" +
+          "<b>"+name+"</b><br>"+
+          "<i>"+date+"</i><br>"  +location+  "<br>" ) */
+          
+    </script>
+    
+</body>
+
+</html>
